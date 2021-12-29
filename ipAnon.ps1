@@ -13,16 +13,20 @@ $hash = @{}
 $output = @()
 
 # check for existing key file
-Write-host "[*] Looking for existing keyFile"
-if (Test-Path -Path $keyFile -PathType Leaf){
-    Write-host "[+] Loading existing keyFile"
-    $keys = Import-Csv -Path $keyFile | Measure-Object
-    if ($keys.Length -gt 0) {
-        $keys = Import-Csv -Path $keyFile
-        foreach($k in $Keys){
-            $hash.Add(($k).Original,($k).Randomized)
+function checkExisting {
+    if (Test-Path -Path $keyFile -PathType Leaf){
+        $keys = Import-Csv -Path $keyFile | Measure-Object
+        if ($keys.Length -gt 0) {
+            $keys = Import-Csv -Path $keyFile
+            foreach($k in $Keys){
+                $hash.Add(($k).Original,($k).Randomized)
+            }
         }
+        $message = "[+] Existing keyFile has been loaded"
+    } else {
+        $message = "[-] No existing keyFile has been found"
     }
+    return $message
 }
 
 # source: https://stackoverflow.com/questions/8365537/checking-for-a-range-in-powershell
@@ -79,6 +83,7 @@ function saveKey {
 }
 
 # __main__
+checkExisting
 $ips = Get-Content -Path $inputFile
 
 foreach ($ip in $ips) {
