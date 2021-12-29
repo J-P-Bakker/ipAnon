@@ -1,5 +1,5 @@
 # ipAnon
-This is a powershell script to anonomize a list of IP addresses.
+This is a fairly basic PowerShell script to anonymize IP addresses with persistent key/value (original/randomized) pairs. It also allows you to set the first octet of your own internal IP range for easier identification.
 
 ## Functions
 The script takes the following mandatory parameters:
