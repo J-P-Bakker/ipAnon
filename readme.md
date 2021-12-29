@@ -15,6 +15,7 @@ The randomIP function will check if an $ip is in the given "private" ip range, i
 
 ## Constraints
 * The input file consists of a list of (one per line) ip addresses (example in [ip.txt](ip.txt))
+* Key file contains a key/value pair in key=value format (example in [key.txt](key.txt))
 
 
 ## Example
