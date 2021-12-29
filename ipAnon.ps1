@@ -74,9 +74,9 @@ function saveKey {
 }
 
 # __main__
-$input = Get-Content -Path $inputFile
+$ips = Get-Content -Path $inputFile
 
-foreach ($ip in $input) {
+foreach ($ip in $ips) {
     # check if IP in $hash (key)
     if ($hash.ContainsKey($ip)){
         # if ip in hash, set ip to value
