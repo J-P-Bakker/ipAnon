@@ -20,12 +20,12 @@ if (Test-Path -Path $keyFile -PathType Leaf){
     }
 }
 
+# source: https://stackoverflow.com/questions/8365537/checking-for-a-range-in-powershell
 Function isIpAddressInRange {
     param(
-            [string] $ipAddress,
-            [string] $fromAddress,
-            [string] $toAddress
-        )
+        [string] $ipAddress,
+        [string] $fromAddress,
+        [string] $toAddress)
     $ip = [system.net.ipaddress]::Parse($ipAddress).GetAddressBytes()
     [array]::Reverse($ip)
     $ip = [system.BitConverter]::ToUInt32($ip, 0)
@@ -43,7 +43,7 @@ Function isIpAddressInRange {
 
 function randomIP {
     param(
-            [string] $ip
+        [string] $ip
         )
     # check ip random IP already exists
     $dup = 0
@@ -66,8 +66,7 @@ function randomIP {
 
 function saveKey {
     param(
-            [hashtable] $hash
-        )
+        [hashtable] $hash)
     
     $hash.Keys | ForEach-Object {
         '{0}={1}' -f $_, $hash[$_] | Out-File -FilePath .\key.txt -Append
@@ -83,7 +82,7 @@ foreach ($ip in $input) {
         # if ip in hash, set ip to value
         $output += $hash.$ip
     }else{
-    # if not in $hash change IP and add to hash
+    # if not in $hash randomize IP and add to hash
         $value = randomIP $ip
         $hash.Add($ip,$value)
         $output += $value
