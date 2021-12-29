@@ -13,10 +13,15 @@ $hash = @{}
 $output = @()
 
 # check for existing key file
+Write-host "[*] Looking for existing keyFile"
 if (Test-Path -Path $keyFile -PathType Leaf){
-    if (!(Get-Content $keyFile) -eq $Null) {
-        $hash = Get-Content -raw $keyFile | ConvertFrom-StringData
-        Clear-Content $keyFile
+    Write-host "[+] Loading existing keyFile"
+    $keys = Import-Csv -Path $keyFile | Measure-Object
+    if ($keys.Length -gt 0) {
+        $keys = Import-Csv -Path $keyFile
+        foreach($k in $Keys){
+            $hash.Add(($k).Original,($k).Randomized)
+        }
     }
 }
 
@@ -67,10 +72,10 @@ function randomIP {
 function saveKey {
     param(
         [hashtable] $hash)
-    
-    $hash.Keys | ForEach-Object {
-        '{0}={1}' -f $_, $hash[$_] | Out-File -FilePath .\key.txt -Append
-    }
+        $hash.GetEnumerator() |
+        Select-Object -Property @{N='Original';E={$_.Key}},
+            @{N='Randomized';E={$_.Value}} |
+        Export-Csv -NoTypeInformation -Path $keyFile
 }
 
 # __main__
