@@ -19,6 +19,12 @@ The randomIP function will check if an $ip is in the given "private" ip range, i
 
 
 ## Example
+Example with an internal ip range from 10.0.0.0 - 10.0.50.255 (10.0.0.0/12)
 ```powershell
-.\ipAnon.ps1 -keyFile .\key.txt -inputFile .\ip.txt -privFrom "10.0.0.0" -privTo "10.0.50.255"
+.\ipAnon.ps1 -keyFile .\key.txt -inputFile .\ip.txt -privFrom "10.0.0.0" -privTo "10.0.63.255"
+```
+
+Example with no internal IP range distinction
+```powershell
+.\ipAnon.ps1 -keyFile .\key.txt -inputFile .\ip.txt -privFrom "0.0.0.0" -privTo "0.0.0.0"
 ```
