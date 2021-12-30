@@ -30,7 +30,7 @@ function checkExisting {
 }
 
 # source: https://stackoverflow.com/questions/8365537/checking-for-a-range-in-powershell
-Function isIpAddressInRange {
+function isIpAddressInRange {
     param(
         [string] $ipAddress,
         [string] $fromAddress,
@@ -48,6 +48,13 @@ Function isIpAddressInRange {
     $to = [system.BitConverter]::ToUInt32($to, 0)
     
     $from -le $ip -and $ip -le $to
+}
+
+function checkValidIP{
+    param(
+        [string] $ip
+    )
+    $ip -as [IPAddress] -as [Bool]
 }
 
 function randomIP {
@@ -87,15 +94,19 @@ checkExisting
 $ips = Get-Content -Path $inputFile
 
 foreach ($ip in $ips) {
-    # check if IP in $hash (key)
-    if ($hash.ContainsKey($ip)){
-        # if ip in hash, set ip to value
-        $output += $hash.$ip
+    if (checkValidIP $ip){
+        # check if IP in $hash (key)
+        if ($hash.ContainsKey($ip)){
+            # if ip in hash, set ip to value
+            $output += $hash.$ip
+        }else{
+        # if not in $hash randomize IP and add to hash
+            $value = randomIP $ip
+            $hash.Add($ip,$value)
+            $output += $value
+        }
     }else{
-    # if not in $hash randomize IP and add to hash
-        $value = randomIP $ip
-        $hash.Add($ip,$value)
-        $output += $value
+        Write-Host "[!] $ip is not a valid IPAddress"
     }
 }
 # save key file
