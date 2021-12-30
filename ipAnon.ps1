@@ -103,4 +103,3 @@ saveKey $hash
 
 # print
 $output | Group-Object | format-table -Property Name, Count
-#test3
