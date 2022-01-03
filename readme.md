@@ -28,3 +28,20 @@ Example with no internal IP range distinction
 ```powershell
 .\ipAnon.ps1 -keyFile .\key.csv -inputFile .\ip.txt -privFrom "0.0.0.0" -privTo "0.0.0.0"
 ```
+
+## Docker
+If you want to use this script in Linux hosts that do not have [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-linux?view=powershell-7.2) installed you can use the provided docker container
+
+### Docker build
+To build the docker image change directories to the ipAnon folder and execute the following command
+```bash
+docker build -t ipAnon:latest .
+```
+
+### Running script
+To run the script
+```bash
+docker run -it --rm -v ${PWD}:/code --name ipAnon ipAnon:latest
+```
+
+Once inside the container you can run it just like on a Windows system (as seen in [example](#example))
