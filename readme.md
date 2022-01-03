@@ -30,7 +30,7 @@ Example with no internal IP range distinction
 ```
 
 ## Docker
-If you want to use this script in Linux hosts that do not have [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-linux?view=powershell-7.2) installed you can use the provided docker container
+If you want to use this script in Linux hosts that does not have [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-linux?view=powershell-7.2) installed you can use the provided docker container
 
 ### Docker build
 To build the docker image change directories to the ipAnon folder and execute the following command
@@ -39,7 +39,7 @@ docker build -t ipAnon:latest .
 ```
 
 ### Running script
-To run the script
+Run the container
 ```bash
 docker run -it --rm -v ${PWD}:/code --name ipAnon ipAnon:latest
 ```
